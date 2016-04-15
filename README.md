@@ -1,5 +1,5 @@
 # Tuhao4s
-## install rabbit mq
+## install rabbit mq:brew install rabbitmq
 ## start rabbit mq:sudo rabbitmq-server
 ## rabbit mq console:http://localhost:15672/#/
 ## command server:http://localhost:8080/swagger-ui.html#/order-controller
