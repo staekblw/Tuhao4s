@@ -1,0 +1,9 @@
+project(':order:domain') {
+    dependencies {
+        compile 'org.axonframework:axon-core:2.4.4'
+        compile 'org.springframework:spring-context:4.3.0.BUILD-SNAPSHOT'
+        compile 'org.springframework:spring-core:4.3.0.BUILD-SNAPSHOT'
+        compile project(':common')
+        testCompile 'junit:junit:4.12', 'org.axonframework:axon-test:2.4.4'
+    }
+}

@@ -1,0 +1,11 @@
+project(':car:car') {
+    apply plugin: 'spring-boot'
+    dependencies {
+        compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+        compile("org.springframework.boot:spring-boot-starter-data-jpa")
+        compile("org.springframework.boot:spring-boot-starter-data-rest")
+        compile 'org.springframework.amqp:spring-rabbit:1.5.4.RELEASE'
+        compile("com.h2database:h2")
+        compile project(':common')
+    }
+}

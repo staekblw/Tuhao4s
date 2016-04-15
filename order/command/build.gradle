@@ -1,0 +1,12 @@
+project(':order:command') {
+    apply plugin: 'spring-boot'
+    dependencies {
+        compile "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+        compile("org.springframework.boot:spring-boot-starter-data-jpa")
+        compile("org.springframework.boot:spring-boot-starter-data-rest")
+        compile 'org.springframework.amqp:spring-rabbit:1.5.4.RELEASE','io.springfox:springfox-swagger2:2.4.0','io.springfox:springfox-swagger-ui:2.4.0'
+        compile("org.hsqldb:hsqldb")
+        compile project(':common')
+        compile project(':order:domain')
+    }
+}
