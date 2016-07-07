@@ -20,7 +20,10 @@ public class Order extends AbstractAnnotatedAggregateRoot<OrderIdentifier> {
     }
 
     public Order(CreateOrderCommand createOrderCommand) {
-        super.apply(new OrderCreatedEvent(createOrderCommand.getCarOwnerId(), createOrderCommand.getOrderId(), createOrderCommand.getCarLocation()));
+        super.apply(new OrderCreatedEvent(
+                createOrderCommand.getCarOwnerId(),
+                createOrderCommand.getOrderId(),
+                createOrderCommand.getCarLocation()));
     }
 
     public void cancel() {
@@ -40,18 +43,18 @@ public class Order extends AbstractAnnotatedAggregateRoot<OrderIdentifier> {
     }
 
     @EventHandler
-    public void handle(OrderCreatedEvent event) {
+    protected void handle(OrderCreatedEvent event) {
         this.id = event.getOrderId();
         this.orderStatus = OrderStatus.CREATED;
     }
 
     @EventHandler
-    public void handle(OrderTakenEvent event) {
+    protected void handle(OrderTakenEvent event) {
         this.orderStatus = OrderStatus.ACCEPTED;
     }
 
     @EventHandler
-    public void handle(OrderCancelledEvent event) {
+    protected void handle(OrderCancelledEvent event) {
         this.orderStatus = OrderStatus.CANCELLED;
     }
 }

@@ -11,21 +11,12 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "order_view")
 public class Order {
-
     @Id
     private String id;
     private String driverId;
     private String carOwnerId;
     private String orderStatus;
     private String location;
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
 
     protected Order() {
     }
@@ -57,5 +48,13 @@ public class Order {
 
     public String getLocation() {
         return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }

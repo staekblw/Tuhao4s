@@ -23,8 +23,9 @@ import static org.hamcrest.core.Is.is;
 
 public class OrderTest {
     private FixtureConfiguration fixture;
-    private String driver = "王林波";
+
     private OrderIdentifier orderId = new OrderIdentifier(UUID.randomUUID().toString());
+    private String driver = "王林波";
     private CarOwnerIdentifier carOwner = new CarOwnerIdentifier("王思聪");
     private Location location = new Location("软件园e区大门");
 
@@ -74,14 +75,16 @@ public class OrderTest {
     public void can_not_cancel_order_if_a_driver_already_taken_it() {
         CancelOrderCommand owner_cancel_the_order = new CancelOrderCommand(orderId, driver);
 
-        fixture.given(a_car_owner_created_an_order, a_driver_taken_the_order)
+        fixture.given(a_car_owner_created_an_order,
+                a_driver_taken_the_order)
                 .when(owner_cancel_the_order)
                 .expectException(is(CAN_NOT_CANCEL_ORDER));
     }
 
     @Test
     public void can_not_take_an_order_which_already_taken() {
-        fixture.given(a_car_owner_created_an_order, a_driver_taken_the_order)
+        fixture.given(a_car_owner_created_an_order,
+                a_driver_taken_the_order)
                 .when(a_driver_take_the_order)
                 .expectException(is(CAN_NOT_TAKEN_ORDER));
     }
