@@ -1,6 +1,7 @@
 package com.tuhao.commandhandler.order;
 
-import com.tuhao.command.order.AcceptOrderCommand;
+import com.tuhao.command.order.CancelOrderCommand;
+import com.tuhao.command.order.TakeOrderCommand;
 import com.tuhao.command.order.CreateOrderCommand;
 import com.tuhao.domain.order.Order;
 import org.axonframework.commandhandling.annotation.CommandHandler;
@@ -26,8 +27,14 @@ public class OrderCommandHandler {
     }
 
     @CommandHandler
-    public void acceptOrder(AcceptOrderCommand acceptOrderCommand) {
-        Order order = orderRepository.load(acceptOrderCommand.getOrderId());
-        order.acceptOrder(acceptOrderCommand);
+    public void takeOrder(TakeOrderCommand takeOrderCommand) {
+        Order order = orderRepository.load(takeOrderCommand.getOrderId());
+        order.take(takeOrderCommand);
+    }
+
+    @CommandHandler
+    public void cancelOrder(CancelOrderCommand cancelOrderCommand) {
+        Order order = orderRepository.load(cancelOrderCommand.getOrderId());
+        order.cancel();
     }
 }

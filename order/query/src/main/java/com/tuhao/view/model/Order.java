@@ -1,5 +1,7 @@
 package com.tuhao.view.model;
 
+import com.tuhao.common.id.CarIdentifier;
+import com.tuhao.common.id.CarOwnerIdentifier;
 import com.tuhao.common.id.OrderIdentifier;
 
 import javax.persistence.Entity;
@@ -14,8 +16,12 @@ public class Order {
     private String id;
     private String driverId;
     private String carOwnerId;
-
     private String orderStatus;
+    private String location;
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
@@ -24,10 +30,13 @@ public class Order {
     protected Order() {
     }
 
-    public Order(String driverId, String carOwnerId, OrderIdentifier id) {
+    public Order(CarOwnerIdentifier carOwnerId, OrderIdentifier id) {
         this.id = id.toString();
+        this.carOwnerId = carOwnerId.toString();
+    }
+
+    public void setDriverId(String driverId) {
         this.driverId = driverId;
-        this.carOwnerId = carOwnerId;
     }
 
     public String getId() {
@@ -44,5 +53,9 @@ public class Order {
 
     public String getOrderStatus() {
         return orderStatus;
+    }
+
+    public String getLocation() {
+        return location;
     }
 }

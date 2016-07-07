@@ -1,8 +1,7 @@
 package com.tuhao.controller;
 
-import com.tuhao.command.order.AcceptOrderCommand;
+import com.tuhao.command.order.TakeOrderCommand;
 import com.tuhao.command.order.CreateOrderCommand;
-import com.tuhao.common.id.OrderIdentifier;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,12 +20,12 @@ public class OrderController {
     }
 
     @RequestMapping(path = "/orders/create-order-command", method = RequestMethod.POST)
-    public void placeOrder(@RequestBody CreateOrderCommand createOrderCommand) {
+    public void takeOrder(@RequestBody CreateOrderCommand createOrderCommand) {
         commandGateway.send(createOrderCommand);
     }
 
-    @RequestMapping(path = "/orders/accept-order-command", method = RequestMethod.POST)
-    public void placeOrder(AcceptOrderCommand acceptOrderCommand) {
-        commandGateway.send(acceptOrderCommand);
+    @RequestMapping(path = "/orders/take-order-command", method = RequestMethod.POST)
+    public void takeOrder(TakeOrderCommand takeOrderCommand) {
+        commandGateway.send(takeOrderCommand);
     }
 }

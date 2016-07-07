@@ -1,9 +1,10 @@
 package com.tuhao.domain.order;
 
-import com.tuhao.command.order.AcceptOrderCommand;
+import com.tuhao.command.order.TakeOrderCommand;
 import com.tuhao.command.order.CreateOrderCommand;
 import com.tuhao.common.id.OrderIdentifier;
-import com.tuhao.events.order.OrderAcceptedEvent;
+import com.tuhao.events.order.OrderTakenEvent;
+import com.tuhao.events.order.OrderCancelledEvent;
 import com.tuhao.events.order.OrderCreatedEvent;
 import org.axonframework.eventhandling.annotation.EventHandler;
 import org.axonframework.eventsourcing.annotation.AbstractAnnotatedAggregateRoot;
@@ -15,18 +16,26 @@ public class Order extends AbstractAnnotatedAggregateRoot<OrderIdentifier> {
 
     private OrderStatus orderStatus;
 
-    Order(){
+    Order() {
     }
 
     public Order(CreateOrderCommand createOrderCommand) {
-        super.apply(new OrderCreatedEvent(createOrderCommand.getCarOwnerId(), createOrderCommand.getOrderId()));
+        super.apply(new OrderCreatedEvent(createOrderCommand.getCarOwnerId(), createOrderCommand.getOrderId(), createOrderCommand.getCarLocation()));
     }
 
-    public void acceptOrder(AcceptOrderCommand acceptOrderCommand) {
+    public void cancel() {
         if (orderStatus.equals(OrderStatus.CREATED)) {
-            this.apply(new OrderAcceptedEvent(acceptOrderCommand.getDriverId(), this.id));
+            this.apply(new OrderCancelledEvent(this.id));
         } else {
-            throw new RuntimeException("order already being accepted!");
+            throw OrderException.CAN_NOT_CANCEL_ORDER;
+        }
+    }
+
+    public void take(TakeOrderCommand takeOrderCommand) {
+        if (orderStatus.equals(OrderStatus.CREATED)) {
+            this.apply(new OrderTakenEvent(takeOrderCommand.getDriverId(), this.id));
+        } else {
+            throw OrderException.CAN_NOT_TAKEN_ORDER;
         }
     }
 
@@ -37,7 +46,12 @@ public class Order extends AbstractAnnotatedAggregateRoot<OrderIdentifier> {
     }
 
     @EventHandler
-    public void handle(OrderAcceptedEvent event) {
+    public void handle(OrderTakenEvent event) {
         this.orderStatus = OrderStatus.ACCEPTED;
+    }
+
+    @EventHandler
+    public void handle(OrderCancelledEvent event) {
+        this.orderStatus = OrderStatus.CANCELLED;
     }
 }

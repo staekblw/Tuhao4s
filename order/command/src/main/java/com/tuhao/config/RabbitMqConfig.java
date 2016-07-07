@@ -26,15 +26,13 @@ public class RabbitMqConfig {
     public RabbitTemplate rabbitTemplate() {
         String queueName = "order.events";
         Queue queue = new Queue(queueName);
-
         CachingConnectionFactory cachingConnectionFactory = cachingConnectionFactory();
         RabbitAdmin rabbitAdmin = new RabbitAdmin(cachingConnectionFactory);
-        rabbitAdmin.declareQueue(queue);
-
+//        rabbitAdmin.declareQueue(queue);
         String exchangeTopic = "order";
-        TopicExchange topicExchange = new TopicExchange(exchangeTopic);
-        rabbitAdmin.declareExchange(topicExchange);
-        rabbitAdmin.declareBinding(BindingBuilder.bind(queue).to(topicExchange).with(queueName));
+//        TopicExchange topicExchange = new TopicExchange(exchangeTopic);
+//        rabbitAdmin.declareExchange(topicExchange);
+//        rabbitAdmin.declareBinding(BindingBuilder.bind(queue).to(topicExchange).with(queueName));
 
         RabbitTemplate rabbitTemplate = new RabbitTemplate(cachingConnectionFactory);
         rabbitTemplate.setRoutingKey(queueName);
