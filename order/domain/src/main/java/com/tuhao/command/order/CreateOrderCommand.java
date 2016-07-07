@@ -11,8 +11,6 @@ import com.tuhao.domain.order.Location;
  */
 public class CreateOrderCommand {
     private CarOwnerIdentifier carOwnerId;
-    private CarIdentifier carId;
-    private StoreIdentifier storeId;
     private Location carLocation;
 
     private OrderIdentifier orderId;
@@ -32,14 +30,6 @@ public class CreateOrderCommand {
 
     public CarOwnerIdentifier getCarOwnerId() {
         return carOwnerId;
-    }
-
-    public CarIdentifier getCarId() {
-        return carId;
-    }
-
-    public StoreIdentifier getStoreId() {
-        return storeId;
     }
 
     public Location getCarLocation() {
